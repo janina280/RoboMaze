@@ -70,8 +70,10 @@ export default function GameControls({
           addAchievement(achievement)
         }
       })
+      setRobot({ x: maze.start.x, y: maze.start.y, direction: "right" })
       onSuccess?.()
     }
+    else { setRobot({ x: maze.start.x, y: maze.start.y, direction: "right" }) }
 
     setIsExecuting(false)
   }

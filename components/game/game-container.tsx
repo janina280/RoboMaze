@@ -68,6 +68,7 @@ export default function GameContainer({ level, onBack, onNextLevel }: GameContai
       setLevelComplete(true)
       setTimerRunning(false)
       completeLevel(level)
+      setRobot({ x: maze.start.x, y: maze.start.y, direction: "right" })
       setLevelsThisSession((prev) => prev + 1)
 
       const blocksUsed = blocks.length
@@ -95,7 +96,7 @@ export default function GameContainer({ level, onBack, onNextLevel }: GameContai
         if (onNextLevel) {
           onNextLevel()
         }
-      }, 2000)
+      }, 5000)
     }
   }, [
     robot,

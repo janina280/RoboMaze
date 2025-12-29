@@ -53,7 +53,6 @@ function Home() {
   }
 
   const handleExitApp = () => {
-    // Simulează închiderea aplicației
     setCurrentPage("exit")
   }
 
