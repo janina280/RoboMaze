@@ -8,28 +8,30 @@ import HowToPlay from "@/components/game/how-to-play"
 import BadgesPage from "@/components/game/badges-page"
 import SettingsPage from "@/components/game/settings-page"
 import TutorialOverlay from "@/components/game/tutorial-overlay"
-import { GameProvider } from "@/lib/game-context"
+import { GameProvider, useGame } from "@/lib/game-context"
 
-type PageView = "menu" | "howToPlay" | "levels" | "badges" | "settings" | "game"
+type PageView = "menu" | "howToPlay" | "levels" | "badges" | "settings" | "game" | "exit"
 
-export default function Home() {
+export default function HomeWrapper() {
+  return (
+      <GameProvider>
+        <Home />
+      </GameProvider>
+  )
+}
+
+function Home() {
   const [currentPage, setCurrentPage] = useState<PageView>("menu")
-  const [selectedLevel, setSelectedLevel] = useState(1)
   const [showTutorial, setShowTutorial] = useState(true)
+  const { completedLevels, completeLevel } = useGame()
 
-  const handleNavigate = (page: "start" | "howToPlay" | "levels" | "badges" | "settings") => {
-    const pageMap: Record<typeof page, PageView> = {
-      start: "levels",
-      howToPlay: "howToPlay",
-      levels: "levels",
-      badges: "badges",
-      settings: "settings",
-    }
-    setCurrentPage(pageMap[page])
+  const currentLevel = completedLevels.length > 0 ? Math.max(...completedLevels) + 1 : 1
+
+  const handleNavigate = (page: "howToPlay" | "levels" | "badges" | "settings"| "exit") => {
+    setCurrentPage(page)
   }
 
-  const handleStartGame = (level: number) => {
-    setSelectedLevel(level)
+  const handleStartCurrentLevel = () => {
     setCurrentPage("game")
     setShowTutorial(true)
   }
@@ -41,33 +43,57 @@ export default function Home() {
 
   const handleBackToLevels = () => {
     setCurrentPage("levels")
-  }
-
-  const handleNextLevel = () => {
-    setSelectedLevel((prev) => prev + 1)
     setShowTutorial(false)
   }
 
+  const handleNextLevel = () => {
+    completeLevel(currentLevel)
+    setCurrentPage("game")
+    setShowTutorial(true)
+  }
+
+  const handleExitApp = () => {
+    // Simulează închiderea aplicației
+    setCurrentPage("exit")
+  }
+
   return (
-    <GameProvider>
-      <main className="relative min-h-screen bg-cover bg-center"
-            style={{
-              backgroundImage: "url('/robo.png')",
-            }}
+      <main
+          className="relative min-h-screen bg-cover bg-center"
+          style={{ backgroundImage: "url('/robo.png')" }}
       >
-        <div className="absolute inset-0 bg-black/20" />
-        {currentPage === "menu" && <MainMenu onNavigate={handleNavigate} />}
+        <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+
+        {currentPage === "menu" && (
+            <MainMenu
+                onNavigate={handleNavigate}
+                onStart={handleStartCurrentLevel}
+                onExit={handleExitApp}  
+            />
+        )}
+
+
         {currentPage === "howToPlay" && <HowToPlay onBack={handleBackToMenu} />}
-        {currentPage === "levels" && <LevelSelector onStartGame={handleStartGame} />}
+        {currentPage === "levels" && <LevelSelector onStartGame={handleStartCurrentLevel} />}
         {currentPage === "badges" && <BadgesPage onBack={handleBackToMenu} />}
         {currentPage === "settings" && <SettingsPage onBack={handleBackToMenu} />}
+
         {currentPage === "game" && (
-          <div>
-            <GameContainer level={selectedLevel} onBack={handleBackToLevels} onNextLevel={handleNextLevel} />
-            {showTutorial && <TutorialOverlay />}
-          </div>
+            <div>
+              <GameContainer
+                  level={currentLevel}
+                  onBack={handleBackToLevels}
+                  onNextLevel={handleNextLevel}
+              />
+              {showTutorial && <TutorialOverlay />}
+            </div>
+        )}
+
+        {currentPage === "exit" && (
+            <div className="flex items-center justify-center h-screen text-white text-3xl">
+              Thanks for playing RoboMaze!
+            </div>
         )}
       </main>
-    </GameProvider>
   )
 }
