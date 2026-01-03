@@ -57,9 +57,24 @@ export default function GameContainer({ level, onBack, onNextLevel }: GameContai
     setLevelComplete(false)
 
     const levelData = EDUCATION_LEVELS.find((l) => l.id === level)
-    if (levelData) {
-      setLevelLessons(levelData.lessons)
-      setLevelHint(levelData.hint)
+
+    if (levelData && level <= 5) {
+      setLevelLessons(levelData.lessons ?? [])
+      setLevelHint(levelData.hint ?? "")
+    } else if (level === 6) {
+      setLevelLessons([
+        "🎉 Congratulations!",
+        "You’ve completed the guided lessons.",
+        "",
+        "From now on, levels are generated dynamically.",
+        "Each challenge will be harder than the last.",
+        "",
+        "There is no single correct solution — only better ones.",
+      ])
+      setLevelHint("Click Run and see how far you can go 🚀")
+    } else {
+      setLevelLessons([])
+      setLevelHint("")
     }
   }, [level, setMaze, setRobot, clearBlocks, setLevelLessons, setLevelHint])
 
@@ -132,7 +147,7 @@ export default function GameContainer({ level, onBack, onNextLevel }: GameContai
       <div className="flex-1 flex gap-6 p-6 overflow-hidden">
         {/* Main Game Area */}
         <div className="flex-1 flex flex-col gap-4 relative">
-          <div className="flex-1 bg-card rounded-lg border border-border shadow-lg overflow-hidden">
+          <div className="flex-1 bg-card rounded-lg border border-border shadow-lg overflow-hidden d-flex justify-center content-center">
             <MazeRenderer maze={maze} robot={robot} />
           </div>
           <GameControls

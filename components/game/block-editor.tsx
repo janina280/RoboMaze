@@ -8,34 +8,6 @@ import { getBlockDescription } from "@/lib/code-generator"
 
 const BLOCK_TYPES: { type: BlockType; label: string; color: string; icon: string; description: string }[] = [
   {
-    type: "moveUp",
-    label: "Move Up",
-    color: "bg-blue-500",
-    icon: "⬆️",
-    description: "Move the robot one cell up",
-  },
-  {
-    type: "moveDown",
-    label: "Move Down",
-    color: "bg-blue-600",
-    icon: "⬇️",
-    description: "Move the robot one cell down",
-  },
-  {
-    type: "moveLeft",
-    label: "Move Left",
-    color: "bg-cyan-500",
-    icon: "⬅️",
-    description: "Move the robot one cell left",
-  },
-  {
-    type: "moveRight",
-    label: "Move Right",
-    color: "bg-cyan-600",
-    icon: "➡️",
-    description: "Move the robot one cell right",
-  },
-  {
     type: "forward",
     label: "Move Forward",
     color: "bg-emerald-500",
@@ -62,6 +34,13 @@ const BLOCK_TYPES: { type: BlockType; label: string; color: string; icon: string
     color: "bg-purple-500",
     icon: "🔄",
     description: "Repeats the following blocks multiple times",
+  },
+  {
+    type: "repeatEnd",
+    label: "End Repeat",
+    color: "bg-purple-700",
+    icon: "⏹",
+    description: "Ends the repeat block",
   },
 ]
 

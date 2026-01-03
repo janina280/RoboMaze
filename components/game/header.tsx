@@ -43,10 +43,6 @@ export default function Header({ level, onBack, onShowTutorial }: HeaderProps) {
         </div>
 
         <div className="hidden sm:flex items-center gap-6">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <RotateCw size={16} />
-            <span>Reset to retry</span>
-          </div>
 
           {onShowTutorial && (
             <Button

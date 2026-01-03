@@ -4,12 +4,15 @@ export interface EducationLevel {
   description: string
   mazeSize: number
   wallDensity: number
-  lessons: string[]
-  hint: string
-  objectives: string[]
-  requiredConcepts: string[]
-  successMessage: string
+  lessons?: string[]
+  hint?: string
+  objectives?: string[]
+  requiredConcepts?: string[]
+  successMessage?: string
+
+  type?: "lesson" | "transition" | "procedural"
 }
+
 
 export const EDUCATION_LEVELS: EducationLevel[] = [
   {
@@ -19,9 +22,9 @@ export const EDUCATION_LEVELS: EducationLevel[] = [
     mazeSize: 5,
     wallDensity: 0.1,
     lessons: [
-      "🤖 The robot starts at the green square",
+      "🤖 The robot starts at the Start square",
       "⬆️ 'Move Forward' makes it go one step",
-      "🎯 The goal is the red square",
+      "🎯 The goal is the sun square",
     ],
     hint: "Add 'Move Forward' blocks to reach the red square",
     objectives: ["Understanding sequences", "Basic movement"],
@@ -93,4 +96,26 @@ export const EDUCATION_LEVELS: EducationLevel[] = [
     successMessage:
       "Amazing! You've mastered the basics of programming! These concepts power everything from games to apps!",
   },
+
+  {
+    id: 6,
+    name: "Free Play Begins",
+    description: "Continue your journey",
+    mazeSize: 10,
+    wallDensity: 0.3,
+    type: "transition",
+    lessons: [
+      "🎉 Congratulations!",
+      "You have learned all the core programming concepts:",
+      "• Sequences",
+      "• Turns",
+      "• Loops",
+      "",
+      "From now on, levels will be generated dynamically.",
+      "Each one will be harder than the last.",
+    ],
+    hint: "There is no single correct solution. Think, test, and improve.",
+    successMessage: "Welcome to procedural challenges! 🚀",
+  }
+
 ]

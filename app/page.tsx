@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import GameContainer from "@/components/game/game-container"
 import LevelSelector from "@/components/game/level-selector"
 import MainMenu from "@/components/game/main-menu"
@@ -10,7 +10,14 @@ import SettingsPage from "@/components/game/settings-page"
 import TutorialOverlay from "@/components/game/tutorial-overlay"
 import { GameProvider, useGame } from "@/lib/game-context"
 
-type PageView = "menu" | "howToPlay" | "levels" | "badges" | "settings" | "game" | "exit"
+type PageView =
+    | "menu"
+    | "howToPlay"
+    | "levels"
+    | "badges"
+    | "settings"
+    | "game"
+    | "exit"
 
 export default function HomeWrapper() {
   return (
@@ -22,18 +29,29 @@ export default function HomeWrapper() {
 
 function Home() {
   const [currentPage, setCurrentPage] = useState<PageView>("menu")
-  const [showTutorial, setShowTutorial] = useState(true)
+  const [showTutorial, setShowTutorial] = useState(false)
+
   const { completedLevels, completeLevel } = useGame()
 
-  const currentLevel = completedLevels.length > 0 ? Math.max(...completedLevels) + 1 : 1
+  const currentLevel =
+      completedLevels.length > 0 ? Math.max(...completedLevels) + 1 : 1
 
-  const handleNavigate = (page: "howToPlay" | "levels" | "badges" | "settings"| "exit") => {
+  useEffect(() => {
+    if (currentPage === "game" && currentLevel <= 5) {
+      setShowTutorial(true)
+    } else {
+      setShowTutorial(false)
+    }
+  }, [currentPage, currentLevel])
+
+  const handleNavigate = (
+      page: "howToPlay" | "levels" | "badges" | "settings" | "exit",
+  ) => {
     setCurrentPage(page)
   }
 
   const handleStartCurrentLevel = () => {
     setCurrentPage("game")
-    setShowTutorial(true)
   }
 
   const handleBackToMenu = () => {
@@ -49,7 +67,6 @@ function Home() {
   const handleNextLevel = () => {
     completeLevel(currentLevel)
     setCurrentPage("game")
-    setShowTutorial(true)
   }
 
   const handleExitApp = () => {
@@ -67,24 +84,40 @@ function Home() {
             <MainMenu
                 onNavigate={handleNavigate}
                 onStart={handleStartCurrentLevel}
-                onExit={handleExitApp}  
+                onExit={handleExitApp}
             />
         )}
 
+        {currentPage === "howToPlay" && (
+            <HowToPlay onBack={handleBackToMenu} />
+        )}
 
-        {currentPage === "howToPlay" && <HowToPlay onBack={handleBackToMenu} />}
-        {currentPage === "levels" && <LevelSelector onStartGame={handleStartCurrentLevel} />}
-        {currentPage === "badges" && <BadgesPage onBack={handleBackToMenu} />}
-        {currentPage === "settings" && <SettingsPage onBack={handleBackToMenu} />}
+        {currentPage === "levels" && (
+            <LevelSelector onStartGame={handleStartCurrentLevel} />
+        )}
+
+        {currentPage === "badges" && (
+            <BadgesPage onBack={handleBackToMenu} />
+        )}
+
+        {currentPage === "settings" && (
+            <SettingsPage onBack={handleBackToMenu} />
+        )}
 
         {currentPage === "game" && (
-            <div>
+            <div className="relative">
               <GameContainer
                   level={currentLevel}
                   onBack={handleBackToLevels}
                   onNextLevel={handleNextLevel}
               />
-              {showTutorial && <TutorialOverlay />}
+
+              {showTutorial && currentLevel <= 5 && (
+                  <TutorialOverlay
+                      level={currentLevel}
+                      onClose={() => setShowTutorial(false)}
+                  />
+              )}
             </div>
         )}
 

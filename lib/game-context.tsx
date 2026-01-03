@@ -11,10 +11,6 @@ export type BlockType =
   | "wait"
   | "repeatStart"
   | "repeatEnd"
-  | "moveUp"
-  | "moveDown"
-  | "moveLeft"
-  | "moveRight"
 
 export interface Block {
   id: string

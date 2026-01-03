@@ -34,8 +34,8 @@ export default function HowToPlay({ onBack }: HowToPlayProps) {
           <div className="bg-secondary/10 border border-secondary/30 rounded-lg p-4">
             <p className="text-secondary font-semibold">Your Goal:</p>
             <p className="text-foreground">
-              Use visual programming blocks to create a sequence of commands that navigates the robot from the purple
-              starting position to the yellow goal.
+              Use visual programming blocks to create a sequence of commands that navigates the robot from the Start
+              position to the yellow goal.
             </p>
           </div>
         </div>

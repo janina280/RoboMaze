@@ -209,7 +209,7 @@ export default function MazeRenderer({ maze, robot }: MazeRendererProps) {
   return (
     <canvas
       ref={canvasRef}
-      className="w-full h-full rounded-lg border-2 border-primary/30"
+      className="w-100 h-full rounded-lg border-2 border-primary/30"
       style={{ maxWidth: "100%", maxHeight: "100%", boxShadow: "0 0 30px rgba(139, 92, 246, 0.3)" }}
     />
   )
