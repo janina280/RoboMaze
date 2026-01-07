@@ -4,18 +4,31 @@ import { useGame } from "@/lib/game-context"
 
 interface LevelSelectorProps {
   onStartGame: (level: number) => void
+  onBack?: () => void
 }
 
 export default function LevelSelector({ onStartGame }: LevelSelectorProps) {
   const { isLevelUnlocked, completedLevels } = useGame()
+  const currentLevel = completedLevels.length + 1
 
-  const levels = [
+  const fixedLevels = [
     { number: 1, name: "Getting Started", difficulty: "Easy", blocks: "3-4" },
     { number: 2, name: "Challenge Time", difficulty: "Medium", blocks: "5-6" },
     { number: 3, name: "Master Builder", difficulty: "Hard", blocks: "7-8" },
     { number: 4, name: "Maze Expert", difficulty: "Expert", blocks: "8-10" },
     { number: 5, name: "Ultimate Challenge", difficulty: "Legendary", blocks: "10+" },
   ]
+
+  // Generează nivele dinamice după level 5
+  const dynamicLevels = Array.from({ length: Math.max(0, currentLevel - 5) }, (_, i) => ({
+    number: 6 + i,
+    name: "New Level",
+    difficulty: "Hard",
+    blocks: "-",
+    isDynamic: true,
+  }))
+
+  const allLevels = [...fixedLevels, ...dynamicLevels]
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8 bg-gradient-to-br from-background via-primary/10 to-background">
@@ -49,9 +62,10 @@ export default function LevelSelector({ onStartGame }: LevelSelectorProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl w-full mb-12">
-        {levels.map((level) => {
-          const unlocked = isLevelUnlocked(level.number)
+        {allLevels.map((level) => {
+          const unlocked = isLevelUnlocked(level.number) || (level.number <= currentLevel)
           const completed = completedLevels.includes(level.number)
+          const isDynamic = (level as any).isDynamic
 
           return (
             <button
@@ -81,7 +95,7 @@ export default function LevelSelector({ onStartGame }: LevelSelectorProps) {
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="text-4xl font-bold text-primary mb-1">Level {level.number}</div>
-                    <h3 className="text-xl font-semibold text-foreground">{level.name}</h3>
+                    <h3 className="text-xl font-semibold text-foreground"> {level.name} {isDynamic ? "(New Level)" : ""}</h3>
                   </div>
                   {completed ? (
                     <CheckCircle2 className="text-green-500 mt-1" size={24} fill="currentColor" />

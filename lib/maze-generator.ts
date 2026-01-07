@@ -37,6 +37,7 @@ export function generateMazeForLevel(level: number): Maze {
           "wall-v-5-2",
           // Simple obstacle - block cell (2, 0) from above and below
           "wall-h-2-1", // Wall above middle cell in path
+          "wall-h-2-3",
         ]),
       }
 
@@ -118,22 +119,22 @@ export function generateMazeForLevel(level: number): Maze {
           // Room separators
           "wall-h-1-2",
           "wall-h-2-2",
-          "wall-h-3-2",
           "wall-h-4-2",
+          "wall-h-4-3",
 
           "wall-h-1-4",
           "wall-h-2-4",
-          "wall-h-3-4",
           "wall-h-4-4",
 
           // Vertical traps
           "wall-v-2-1",
-          "wall-v-2-2",
           "wall-v-2-3",
+          "wall-v-2-6",
+          "wall-v-2-7",
 
           "wall-v-4-2",
-          "wall-v-4-3",
           "wall-v-4-4",
+          "wall-v-4-5",
         ]),
       }
 
