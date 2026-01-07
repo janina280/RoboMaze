@@ -6,11 +6,12 @@ import type { Robot, Maze } from "@/lib/game-context"
 interface MazeRendererProps {
   maze: Maze
   robot: Robot
+  solutionPath?: { x: number; y: number }[]
 }
 
 const CELL_SIZE = 50
 
-export default function MazeRenderer({ maze, robot }: MazeRendererProps) {
+export default function MazeRenderer({ maze, robot, solutionPath = []  }: MazeRendererProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -102,6 +103,18 @@ export default function MazeRenderer({ maze, robot }: MazeRendererProps) {
     ctx.shadowColor = "transparent"
     ctx.shadowBlur = 0
 
+    if (solutionPath.length > 0) {
+      ctx.strokeStyle = "#22c55e"
+      ctx.lineWidth = 4
+      ctx.lineCap = "round"
+      ctx.beginPath()
+      solutionPath.forEach((cell, i) => {
+        const x = cell.x * CELL_SIZE + CELL_SIZE / 2
+        const y = cell.y * CELL_SIZE + CELL_SIZE / 2
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)
+      })
+      ctx.stroke()
+    }
     const goalX = maze.goal.x * CELL_SIZE + CELL_SIZE / 2
     const goalY = maze.goal.y * CELL_SIZE + CELL_SIZE / 2
 
@@ -204,7 +217,7 @@ export default function MazeRenderer({ maze, robot }: MazeRendererProps) {
     ctx.beginPath()
     ctx.arc(robotX, robotY - 2, 2, 0, Math.PI * 2)
     ctx.fill()
-  }, [maze, robot])
+  }, [maze, robot, solutionPath])
 
   return (
     <canvas

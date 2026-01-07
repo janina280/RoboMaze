@@ -14,6 +14,8 @@ interface GameControlsProps {
   onToggleDebugger?: () => void
   onSuccess?: () => void
   onAttempt?: () => void
+  onToggleSolution?: () => void
+  showSolution?: boolean
 }
 
 export default function GameControls({
@@ -23,6 +25,8 @@ export default function GameControls({
   onToggleDebugger,
   onSuccess,
   onAttempt,
+                                       onToggleSolution,
+                                       showSolution,
 }: GameControlsProps) {
   const { blocks, robot, maze, setRobot, isExecuting, setIsExecuting, clearBlocks, achievements, addAchievement } =
     useGame()
@@ -141,6 +145,18 @@ export default function GameControls({
             </Button>
           )}
         </div>
+
+        {onToggleSolution && (
+            <Button
+                onClick={onToggleSolution}
+                variant="outline"
+                className="w-full"
+            >
+              {showSolution ? "Hide Optimal Path" : "Show Optimal Path"}
+            </Button>
+        )}
+
+
 
         {message && (
           <div
