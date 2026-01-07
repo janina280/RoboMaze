@@ -147,9 +147,10 @@ export default function GameContainer({ level, onBack, onNextLevel }: GameContai
       <div className="flex-1 flex gap-6 p-6 overflow-hidden">
         {/* Main Game Area */}
         <div className="flex-1 flex flex-col gap-4 relative">
-          <div className="flex-1 bg-card rounded-lg border border-border shadow-lg overflow-hidden d-flex justify-center content-center">
+          <div className="flex-1 bg-card rounded-lg border border-border shadow-lg overflow-hidden flex items-center justify-center">
             <MazeRenderer maze={maze} robot={robot} />
           </div>
+
           <GameControls
             level={level}
             maxBlocks={10}
