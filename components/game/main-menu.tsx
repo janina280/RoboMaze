@@ -121,7 +121,7 @@ export default function MainMenu({ onNavigate, onStart, onExit }: MainMenuProps)
 
         {/* Footer Info */}
         <div className="mt-12 text-center max-w-xl">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-lg text-muted-foreground">
             Master fundamental programming concepts: sequences, control flow, loops, and algorithmic thinking through an
             interactive visual programming environment.
           </p>
