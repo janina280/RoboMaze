@@ -93,8 +93,12 @@ function Home() {
         )}
 
         {currentPage === "levels" && (
-            <LevelSelector onStartGame={handleStartCurrentLevel} />
+            <LevelSelector
+                onStartGame={handleStartCurrentLevel}
+                onBack={handleBackToMenu}
+            />
         )}
+
 
         {currentPage === "badges" && (
             <BadgesPage onBack={handleBackToMenu} />
