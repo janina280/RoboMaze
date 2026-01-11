@@ -28,14 +28,14 @@ export default function HowToPlay({ onBack }: HowToPlayProps) {
             Game Objective
           </h2>
           <p className="text-muted-foreground mb-4">
-            Guide your robot through procedurally-generated mazes to reach the yellow goal square. Each level introduces
+            Guide your robot through procedurally-generated mazes to reach the finish goal square. Each level introduces
             new programming concepts and challenges.
           </p>
           <div className="bg-secondary/10 border border-secondary/30 rounded-lg p-4">
             <p className="text-secondary font-semibold">Your Goal:</p>
             <p className="text-foreground">
               Use visual programming blocks to create a sequence of commands that navigates the robot from the Start
-              position to the yellow goal.
+              position to the Finish goal.
             </p>
           </div>
         </div>
@@ -165,13 +165,6 @@ export default function HowToPlay({ onBack }: HowToPlayProps) {
               </li>
             ))}
           </ul>
-        </div>
-
-        {/* Ready to Play */}
-        <div className="mt-8 text-center">
-          <Button size="lg" onClick={onBack} className="bg-primary hover:bg-primary/90">
-            Start Playing Now
-          </Button>
         </div>
       </div>
     </div>

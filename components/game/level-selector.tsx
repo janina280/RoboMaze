@@ -24,8 +24,8 @@ export default function LevelSelector({ onStartGame, onBack }: LevelSelectorProp
   const dynamicLevels = Array.from({ length: Math.max(0, currentLevel - 5) }, (_, i) => ({
     number: 6 + i,
     name: "New Level",
-    difficulty: "Hard",
-    blocks: "-",
+    difficulty: "Extra Legendary",
+    blocks: "15+",
     isDynamic: true,
   }))
 
@@ -48,7 +48,7 @@ export default function LevelSelector({ onStartGame, onBack }: LevelSelectorProp
               RoboMaze
             </h1>
             <p className="text-lg text-muted-foreground mb-2 font-semibold">Learn Programming Through Robot Navigation</p>
-            <p className="text-sm text-muted-foreground mb-6">
+            <p className="text-sm text-muted-foreground mb-4">
               Master fundamental programming concepts: sequences, control flow, loops, and algorithmic thinking through an interactive visual programming environment.
             </p>
 
@@ -127,7 +127,7 @@ export default function LevelSelector({ onStartGame, onBack }: LevelSelectorProp
 
                       {unlocked && (
                           <div className="flex items-center gap-2 text-primary font-semibold text-sm pt-2 group-hover:gap-3 transition-all">
-                            {completed ? "Play Again" : "Play"} <ArrowRight size={16} />
+                            {completed ? "Completed" : "Play"} <ArrowRight size={16} />
                           </div>
                       )}
                     </div>
